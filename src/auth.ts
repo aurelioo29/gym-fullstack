@@ -54,10 +54,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
 
     async session({ session, token }) {
-      session.user.id = token.id;
-      session.user.roleId = token.roleId;
-      session.user.role = token.role;
-      session.user.permissions = token.permissions ?? [];
+      session.user.id = typeof token.id === "string" ? token.id : "";
+      session.user.roleId =
+        typeof token.roleId === "string" ? token.roleId : "";
+      session.user.role = typeof token.role === "string" ? token.role : "";
+      session.user.permissions = Array.isArray(token.permissions)
+        ? token.permissions
+        : [];
 
       return session;
     },
