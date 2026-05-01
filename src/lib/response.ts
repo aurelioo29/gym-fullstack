@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { ZodError } from "zod";
 
 type SuccessResponse<T> = {
   message?: string;
@@ -42,5 +43,19 @@ export function errorResponse({
       ...(errors ? { errors } : {}),
     },
     { status },
+  );
+}
+
+export function validationErrorResponse(error: ZodError) {
+  return NextResponse.json(
+    {
+      success: false,
+      message: "Validation failed",
+      errors: error.issues.map((issue) => ({
+        field: issue.path.join("."),
+        message: issue.message,
+      })),
+    },
+    { status: 422 },
   );
 }

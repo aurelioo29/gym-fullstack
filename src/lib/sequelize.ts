@@ -7,7 +7,6 @@ const host = process.env.DB_HOST || "localhost";
 const port = Number(process.env.DB_PORT || 5432);
 
 declare global {
-  // eslint-disable-next-line no-var
   var sequelize: Sequelize | undefined;
 }
 
