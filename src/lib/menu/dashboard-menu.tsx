@@ -54,6 +54,13 @@ export const dashboardSideMenuItems: DashboardMenuItem[] = [
         icon: <IdcardOutlined />,
         permission: "trainer_profiles.review",
       },
+      {
+        key: "/dashboard/trainer-assignments",
+        label: "Trainer Assignments",
+        href: "/dashboard/trainer-assignments",
+        icon: <IdcardOutlined />,
+        permission: "trainer_assignments.view",
+      },
     ],
   },
 
@@ -219,7 +226,8 @@ export function toAntdSideMenuItems(
 export function getDefaultOpenKeys(pathname: string) {
   if (
     pathname.startsWith("/dashboard/users") ||
-    pathname.startsWith("/dashboard/trainers")
+    pathname.startsWith("/dashboard/trainers") ||
+    pathname.startsWith("/dashboard/trainer-assignments")
   ) {
     return ["user-management"];
   }

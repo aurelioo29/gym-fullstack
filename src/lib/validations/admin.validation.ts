@@ -108,3 +108,47 @@ export const updateNewsSchema = z.object({
   seoTitle: z.string().nullable().optional(),
   seoDescription: z.string().nullable().optional(),
 });
+
+export const createTrainerAssignmentSchema = z
+  .object({
+    customerId: z.string().uuid("Customer ID tidak valid"),
+    trainerId: z.string().uuid("Trainer ID tidak valid"),
+    startDate: z.coerce.date({
+      message: "Start date tidak valid",
+    }),
+    endDate: z.coerce.date().nullable().optional(),
+    isActive: z.boolean().optional(),
+    notes: z.string().nullable().optional(),
+  })
+  .refine(
+    (value) => {
+      if (!value.endDate) return true;
+
+      return value.endDate >= value.startDate;
+    },
+    {
+      message: "End date tidak boleh sebelum start date",
+      path: ["endDate"],
+    },
+  );
+
+export const updateTrainerAssignmentSchema = z
+  .object({
+    customerId: z.string().uuid("Customer ID tidak valid").optional(),
+    trainerId: z.string().uuid("Trainer ID tidak valid").optional(),
+    startDate: z.coerce.date().optional(),
+    endDate: z.coerce.date().nullable().optional(),
+    isActive: z.boolean().optional(),
+    notes: z.string().nullable().optional(),
+  })
+  .refine(
+    (value) => {
+      if (!value.startDate || !value.endDate) return true;
+
+      return value.endDate >= value.startDate;
+    },
+    {
+      message: "End date tidak boleh sebelum start date",
+      path: ["endDate"],
+    },
+  );
