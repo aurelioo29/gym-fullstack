@@ -23,7 +23,6 @@ import {
   DeleteOutlined,
   EditOutlined,
   PlusOutlined,
-  ReloadOutlined,
   SearchOutlined,
   UserOutlined,
 } from "@ant-design/icons";

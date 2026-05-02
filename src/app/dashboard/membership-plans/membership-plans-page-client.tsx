@@ -549,14 +549,6 @@ export default function MembershipPlansPageClient() {
             </Form.Item>
 
             <Form.Item
-              label="Slug"
-              name="slug"
-              extra="Leave empty to generate automatically from name."
-            >
-              <Input placeholder="monthly-premium" />
-            </Form.Item>
-
-            <Form.Item
               label="Price"
               name="price"
               rules={[{ required: true, message: "Price is required" }]}

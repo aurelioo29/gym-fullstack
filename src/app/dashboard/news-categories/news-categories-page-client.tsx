@@ -464,14 +464,6 @@ export default function NewsCategoriesPageClient() {
             <Input placeholder="Gym Tips" />
           </Form.Item>
 
-          {/* <Form.Item
-            label="Slug"
-            name="slug"
-            extra="Leave empty to generate automatically from name."
-          >
-            <Input placeholder="gym-tips" />
-          </Form.Item> */}
-
           <Form.Item label="Description" name="description">
             <TextArea rows={3} placeholder="Category description..." />
           </Form.Item>
