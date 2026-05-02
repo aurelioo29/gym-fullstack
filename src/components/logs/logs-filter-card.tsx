@@ -1,9 +1,7 @@
 "use client";
 
-import { Button, Card, DatePicker, Input, Select } from "antd";
+import { Button, Card, Input, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-
-const { RangePicker } = DatePicker;
 
 type Option = {
   label: string;
@@ -64,7 +62,7 @@ export default function LogsFilterCard({
           <div className="mb-1 text-xs font-medium text-slate-600">
             Created at
           </div>
-          <RangePicker className="w-full" disabled />
+          <Input disabled placeholder="Coming soon" />
         </div>
 
         <div className="flex items-end">
