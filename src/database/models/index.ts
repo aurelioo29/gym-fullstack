@@ -13,6 +13,8 @@ import { GeneralSetting } from "./general-setting.model";
 import { AuditLog } from "./audit-log.model";
 import { ActivityLog } from "./activity-log.model";
 import { Notification } from "./notification.model";
+import { NewsCategory } from "./news-category.model";
+import { News } from "./news.model";
 
 Role.initModel(sequelize);
 Permission.initModel(sequelize);
@@ -27,6 +29,8 @@ GeneralSetting.initModel(sequelize);
 AuditLog.initModel(sequelize);
 ActivityLog.initModel(sequelize);
 Notification.initModel(sequelize);
+NewsCategory.initModel(sequelize);
+News.initModel(sequelize);
 
 /**
  * Role ↔ User
@@ -171,6 +175,32 @@ Notification.belongsTo(User, {
   as: "actor",
 });
 
+/**
+ * News Categories ↔ News
+ */
+NewsCategory.hasMany(News, {
+  foreignKey: "categoryId",
+  as: "news",
+});
+
+News.belongsTo(NewsCategory, {
+  foreignKey: "categoryId",
+  as: "category",
+});
+
+/**
+ * User ↔ News
+ */
+User.hasMany(News, {
+  foreignKey: "authorId",
+  as: "authoredNews",
+});
+
+News.belongsTo(User, {
+  foreignKey: "authorId",
+  as: "author",
+});
+
 export {
   sequelize,
   Role,
@@ -186,4 +216,6 @@ export {
   AuditLog,
   ActivityLog,
   Notification,
+  NewsCategory,
+  News,
 };
