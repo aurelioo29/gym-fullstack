@@ -1,14 +1,18 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import { Layout, Menu, theme, Typography } from "antd";
 import { Dumbbell } from "lucide-react";
 import { usePathname } from "next/navigation";
+
 import {
   dashboardSideMenuItems,
   filterMenuByPermission,
   getDefaultOpenKeys,
   toAntdSideMenuItems,
 } from "@/lib/menu/dashboard-menu";
+import { apiGet } from "@/lib/client-api";
 
 const { Sider } = Layout;
 const { Text } = Typography;
@@ -16,6 +20,17 @@ const { Text } = Typography;
 type DashboardSidebarProps = {
   collapsed: boolean;
   permissions: string[];
+};
+
+type GymInfoResponse = {
+  success: boolean;
+  message: string;
+  data: {
+    id: string;
+    name: string;
+    tagline: string | null;
+    logoUrl: string | null;
+  } | null;
 };
 
 export default function DashboardSidebar({
@@ -28,10 +43,32 @@ export default function DashboardSidebar({
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const [gymName, setGymName] = useState("Gym Admin");
+  const [gymTagline, setGymTagline] = useState("Management System");
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+
   const filteredMenu = filterMenuByPermission(
     dashboardSideMenuItems,
     permissions,
   );
+
+  async function fetchGymInfo() {
+    try {
+      const response = await apiGet<GymInfoResponse>("/api/admin/gym-info");
+
+      if (!response.data) return;
+
+      setGymName(response.data.name || "Gym Admin");
+      setGymTagline(response.data.tagline || "Management System");
+      setLogoUrl(response.data.logoUrl || null);
+    } catch (error) {
+      console.error("Fetch sidebar gym info error:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchGymInfo();
+  }, []);
 
   return (
     <Sider
@@ -45,17 +82,29 @@ export default function DashboardSidebar({
       }}
     >
       <div className="h-16 flex items-center gap-3 px-5 border-b border-slate-100">
-        <div className="h-10 w-10 rounded-xl bg-slate-900 text-white flex items-center justify-center shrink-0">
-          <Dumbbell size={20} />
+        <div className="h-10 w-10 rounded-xl text-white flex items-center justify-center shrink-0 overflow-hidden">
+          {logoUrl ? (
+            <Image
+              src={logoUrl}
+              alt={gymName}
+              width={40}
+              height={40}
+              className="h-full w-full object-contain"
+              unoptimized
+            />
+          ) : (
+            <Dumbbell size={20} />
+          )}
         </div>
 
         {!collapsed && (
           <div className="leading-tight min-w-0">
             <Text className="!font-bold !text-slate-900 block truncate">
-              Gym Admin
+              {gymName}
             </Text>
+
             <Text className="!text-xs !text-slate-500 block truncate">
-              Management System
+              {gymTagline}
             </Text>
           </div>
         )}
