@@ -66,6 +66,28 @@ const permissions = [
   ["Approve Trainers", "trainer_profiles.approve", "trainer_profiles"],
   ["Reject Trainers", "trainer_profiles.reject", "trainer_profiles"],
 
+  // Trainer Assignments
+  [
+    "View Trainer Assignments",
+    "trainer_assignments.view",
+    "trainer_assignments",
+  ],
+  [
+    "Create Trainer Assignments",
+    "trainer_assignments.create",
+    "trainer_assignments",
+  ],
+  [
+    "Update Trainer Assignments",
+    "trainer_assignments.update",
+    "trainer_assignments",
+  ],
+  [
+    "Delete Trainer Assignments",
+    "trainer_assignments.delete",
+    "trainer_assignments",
+  ],
+
   // Gym Info
   ["View Gym Info", "gym_info.view", "gym_info"],
   ["Update Gym Info", "gym_info.update", "gym_info"],
@@ -73,6 +95,98 @@ const permissions = [
   // General Settings
   ["View General Settings", "settings.view", "settings"],
   ["Update General Settings", "settings.update", "settings"],
+
+  // Notifications - Dashboard internal notifications
+  ["View Notifications", "notifications.view", "notifications"],
+  ["Create Notifications", "notifications.create", "notifications"],
+  ["Update Notifications", "notifications.update", "notifications"],
+  ["Delete Notifications", "notifications.delete", "notifications"],
+  ["Mark Notifications Read", "notifications.mark_read", "notifications"],
+
+  // Push Notifications - Mobile Flutter feed
+  ["View Push Notifications", "push_notifications.view", "push_notifications"],
+  [
+    "Create Push Notifications",
+    "push_notifications.create",
+    "push_notifications",
+  ],
+  [
+    "Update Push Notifications",
+    "push_notifications.update",
+    "push_notifications",
+  ],
+  [
+    "Delete Push Notifications",
+    "push_notifications.delete",
+    "push_notifications",
+  ],
+  [
+    "Publish Push Notifications",
+    "push_notifications.publish",
+    "push_notifications",
+  ],
+  [
+    "Cancel Push Notifications",
+    "push_notifications.cancel",
+    "push_notifications",
+  ],
+
+  // News Categories
+  ["View News Categories", "news_categories.view", "news_categories"],
+  ["Create News Categories", "news_categories.create", "news_categories"],
+  ["Update News Categories", "news_categories.update", "news_categories"],
+  ["Delete News Categories", "news_categories.delete", "news_categories"],
+
+  // News
+  ["View News", "news.view", "news"],
+  ["Create News", "news.create", "news"],
+  ["Update News", "news.update", "news"],
+  ["Delete News", "news.delete", "news"],
+  ["Publish News", "news.publish", "news"],
+
+  // Membership Plans
+  ["View Membership Plans", "membership_plans.view", "membership_plans"],
+  ["Create Membership Plans", "membership_plans.create", "membership_plans"],
+  ["Update Membership Plans", "membership_plans.update", "membership_plans"],
+  ["Delete Membership Plans", "membership_plans.delete", "membership_plans"],
+
+  // Member Memberships / Offline Transactions
+  ["View Member Memberships", "member_memberships.view", "member_memberships"],
+  [
+    "Create Member Memberships",
+    "member_memberships.create",
+    "member_memberships",
+  ],
+  [
+    "Update Member Memberships",
+    "member_memberships.update",
+    "member_memberships",
+  ],
+  [
+    "Delete Member Memberships",
+    "member_memberships.delete",
+    "member_memberships",
+  ],
+
+  // Services
+  ["View Services", "services.view", "services"],
+  ["Create Services", "services.create", "services"],
+  ["Update Services", "services.update", "services"],
+  ["Delete Services", "services.delete", "services"],
+
+  // Service Schedules
+  ["View Service Schedules", "service_schedules.view", "service_schedules"],
+  ["Create Service Schedules", "service_schedules.create", "service_schedules"],
+  ["Update Service Schedules", "service_schedules.update", "service_schedules"],
+  ["Delete Service Schedules", "service_schedules.delete", "service_schedules"],
+  ["Cancel Service Schedules", "service_schedules.cancel", "service_schedules"],
+
+  // Bookings
+  ["View Bookings", "bookings.view", "bookings"],
+  ["Create Bookings", "bookings.create", "bookings"],
+  ["Update Bookings", "bookings.update", "bookings"],
+  ["Delete Bookings", "bookings.delete", "bookings"],
+  ["Cancel Bookings", "bookings.cancel", "bookings"],
 
   // Logs
   ["View Audit Logs", "audit_logs.view", "audit_logs"],
@@ -158,11 +272,67 @@ module.exports = {
       "trainer_profiles.approve",
       "trainer_profiles.reject",
 
+      "trainer_assignments.view",
+      "trainer_assignments.create",
+      "trainer_assignments.update",
+      "trainer_assignments.delete",
+
       "gym_info.view",
       "gym_info.update",
 
       "settings.view",
       "settings.update",
+
+      "notifications.view",
+      "notifications.create",
+      "notifications.update",
+      "notifications.delete",
+      "notifications.mark_read",
+
+      "push_notifications.view",
+      "push_notifications.create",
+      "push_notifications.update",
+      "push_notifications.delete",
+      "push_notifications.publish",
+      "push_notifications.cancel",
+
+      "news_categories.view",
+      "news_categories.create",
+      "news_categories.update",
+      "news_categories.delete",
+
+      "news.view",
+      "news.create",
+      "news.update",
+      "news.delete",
+      "news.publish",
+
+      "membership_plans.view",
+      "membership_plans.create",
+      "membership_plans.update",
+      "membership_plans.delete",
+
+      "member_memberships.view",
+      "member_memberships.create",
+      "member_memberships.update",
+      "member_memberships.delete",
+
+      "services.view",
+      "services.create",
+      "services.update",
+      "services.delete",
+
+      "service_schedules.view",
+      "service_schedules.create",
+      "service_schedules.update",
+      "service_schedules.delete",
+      "service_schedules.cancel",
+
+      "bookings.view",
+      "bookings.create",
+      "bookings.update",
+      "bookings.delete",
+      "bookings.cancel",
 
       "audit_logs.view",
       "activity_logs.view",
