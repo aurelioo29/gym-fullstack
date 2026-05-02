@@ -13,6 +13,7 @@ import {
   TeamOutlined,
   UserOutlined,
   CreditCardOutlined,
+  CalendarOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import Link from "next/link";
@@ -100,6 +101,43 @@ export const dashboardSideMenuItems: DashboardMenuItem[] = [
         href: "/dashboard/membership-plans",
         icon: <CreditCardOutlined />,
         permission: "membership_plans.view",
+      },
+      {
+        key: "/dashboard/member-memberships",
+        label: "Member Memberships",
+        href: "/dashboard/member-memberships",
+        icon: <CreditCardOutlined />,
+        permission: "member_memberships.view",
+      },
+    ],
+  },
+
+  {
+    key: "service-management",
+    label: "Services",
+    icon: <CalendarOutlined />,
+    permission: "services.view",
+    children: [
+      {
+        key: "/dashboard/services",
+        label: "Services",
+        href: "/dashboard/services",
+        icon: <CalendarOutlined />,
+        permission: "services.view",
+      },
+      {
+        key: "/dashboard/service-schedules",
+        label: "Service Schedules",
+        href: "/dashboard/service-schedules",
+        icon: <CalendarOutlined />,
+        permission: "service_schedules.view",
+      },
+      {
+        key: "/dashboard/bookings",
+        label: "Bookings",
+        href: "/dashboard/bookings",
+        icon: <CalendarOutlined />,
+        permission: "bookings.view",
       },
     ],
   },
@@ -271,8 +309,19 @@ export function getDefaultOpenKeys(pathname: string) {
     return ["logs"];
   }
 
-  if (pathname.startsWith("/dashboard/membership-plans")) {
+  if (
+    pathname.startsWith("/dashboard/membership-plans") ||
+    pathname.startsWith("/dashboard/member-memberships")
+  ) {
     return ["membership-management"];
+  }
+
+  if (
+    pathname.startsWith("/dashboard/services") ||
+    pathname.startsWith("/dashboard/service-schedules") ||
+    pathname.startsWith("/dashboard/bookings")
+  ) {
+    return ["service-management"];
   }
 
   return [];

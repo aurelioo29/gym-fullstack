@@ -201,3 +201,194 @@ export const updateMembershipPlanSchema = z.object({
 
   isActive: z.boolean().optional(),
 });
+
+export const createMemberMembershipSchema = z.object({
+  userId: z.string().uuid("User ID tidak valid"),
+  membershipPlanId: z.string().uuid("Membership plan ID tidak valid"),
+
+  startDate: z.coerce.date({
+    message: "Start date tidak valid",
+  }),
+
+  status: z.enum(["PENDING", "ACTIVE", "EXPIRED", "CANCELLED"]).optional(),
+
+  paymentStatus: z.enum(["UNPAID", "PAID", "CANCELLED"]).optional(),
+
+  paymentMethod: z.enum(["OFFLINE_CASH", "OFFLINE_TRANSFER"]).optional(),
+
+  paidAmount: z.coerce.number().min(0, "Paid amount tidak boleh negatif"),
+
+  paymentReference: z.string().nullable().optional(),
+  notes: z.string().nullable().optional(),
+});
+
+export const updateMemberMembershipSchema = z.object({
+  startDate: z.coerce.date().optional(),
+  endDate: z.coerce.date().optional(),
+
+  status: z.enum(["PENDING", "ACTIVE", "EXPIRED", "CANCELLED"]).optional(),
+
+  paymentStatus: z.enum(["UNPAID", "PAID", "CANCELLED"]).optional(),
+
+  paymentMethod: z.enum(["OFFLINE_CASH", "OFFLINE_TRANSFER"]).optional(),
+
+  paidAmount: z.coerce
+    .number()
+    .min(0, "Paid amount tidak boleh negatif")
+    .optional(),
+
+  paymentReference: z.string().nullable().optional(),
+  notes: z.string().nullable().optional(),
+});
+
+export const createServiceSchema = z.object({
+  name: z.string().min(2, "Nama service minimal 2 karakter"),
+  slug: z.string().min(2).optional(),
+  description: z.string().nullable().optional(),
+
+  serviceType: z
+    .enum(["CLASS", "PERSONAL_TRAINING", "FACILITY", "OTHER"])
+    .optional(),
+
+  price: z.coerce.number().min(0, "Harga tidak boleh negatif").optional(),
+
+  durationMinutes: z.coerce
+    .number()
+    .int("Durasi harus integer")
+    .min(1, "Durasi minimal 1 menit"),
+
+  capacity: z.coerce
+    .number()
+    .int("Capacity harus integer")
+    .min(0, "Capacity tidak boleh negatif")
+    .nullable()
+    .optional(),
+
+  imageUrl: z.string().nullable().optional(),
+
+  isActive: z.boolean().optional(),
+});
+
+export const updateServiceSchema = z.object({
+  name: z.string().min(2, "Nama service minimal 2 karakter").optional(),
+  slug: z.string().min(2).optional(),
+  description: z.string().nullable().optional(),
+
+  serviceType: z
+    .enum(["CLASS", "PERSONAL_TRAINING", "FACILITY", "OTHER"])
+    .optional(),
+
+  price: z.coerce.number().min(0, "Harga tidak boleh negatif").optional(),
+
+  durationMinutes: z.coerce
+    .number()
+    .int("Durasi harus integer")
+    .min(1, "Durasi minimal 1 menit")
+    .optional(),
+
+  capacity: z.coerce
+    .number()
+    .int("Capacity harus integer")
+    .min(0, "Capacity tidak boleh negatif")
+    .nullable()
+    .optional(),
+
+  imageUrl: z.string().nullable().optional(),
+
+  isActive: z.boolean().optional(),
+});
+
+export const createServiceScheduleSchema = z
+  .object({
+    serviceId: z.string().uuid("Service ID tidak valid"),
+    trainerId: z.string().uuid("Trainer ID tidak valid").nullable().optional(),
+
+    title: z.string().nullable().optional(),
+
+    startTime: z.coerce.date({
+      message: "Start time tidak valid",
+    }),
+
+    endTime: z.coerce.date({
+      message: "End time tidak valid",
+    }),
+
+    capacity: z.coerce
+      .number()
+      .int("Capacity harus integer")
+      .min(0, "Capacity tidak boleh negatif"),
+
+    location: z.string().nullable().optional(),
+    notes: z.string().nullable().optional(),
+  })
+  .refine((value) => value.endTime > value.startTime, {
+    message: "End time harus setelah start time",
+    path: ["endTime"],
+  });
+
+export const updateServiceScheduleSchema = z
+  .object({
+    serviceId: z.string().uuid("Service ID tidak valid").optional(),
+    trainerId: z.string().uuid("Trainer ID tidak valid").nullable().optional(),
+
+    title: z.string().nullable().optional(),
+
+    startTime: z.coerce.date().optional(),
+    endTime: z.coerce.date().optional(),
+
+    capacity: z.coerce
+      .number()
+      .int("Capacity harus integer")
+      .min(0, "Capacity tidak boleh negatif")
+      .optional(),
+
+    location: z.string().nullable().optional(),
+    notes: z.string().nullable().optional(),
+
+    isCancelled: z.boolean().optional(),
+    cancelReason: z.string().nullable().optional(),
+  })
+  .refine(
+    (value) => {
+      if (!value.startTime || !value.endTime) return true;
+
+      return value.endTime > value.startTime;
+    },
+    {
+      message: "End time harus setelah start time",
+      path: ["endTime"],
+    },
+  );
+
+export const cancelServiceScheduleSchema = z.object({
+  cancelReason: z.string().min(3, "Cancel reason minimal 3 karakter"),
+});
+
+export const createBookingSchema = z.object({
+  userId: z.string().uuid("User ID tidak valid"),
+  serviceScheduleId: z.string().uuid("Service schedule ID tidak valid"),
+
+  amountPaid: z.coerce
+    .number()
+    .min(0, "Amount paid tidak boleh negatif")
+    .optional(),
+
+  paymentReference: z.string().nullable().optional(),
+  notes: z.string().nullable().optional(),
+});
+
+export const updateBookingSchema = z.object({
+  status: z.enum(["BOOKED", "COMPLETED", "CANCELLED", "NO_SHOW"]).optional(),
+
+  amountPaid: z.coerce
+    .number()
+    .min(0, "Amount paid tidak boleh negatif")
+    .optional(),
+
+  paymentReference: z.string().nullable().optional(),
+  notes: z.string().nullable().optional(),
+});
+
+export const cancelBookingSchema = z.object({
+  cancelReason: z.string().min(3, "Cancel reason minimal 3 karakter"),
+});
